@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Race Demo (Spring Boot)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="desktop">
+    <main class="workspace">
+      <section id="raceWindow" class="window" aria-label="Race control window">
+        <div class="title-bar">
+          <div class="title-bar-text">Off to the Races</div>
+          <div class="title-bar-buttons">
+            <button type="button" class="caption-btn">_</button>
+            <button type="button" class="caption-btn">[]</button>
+            <button type="button" id="closeBtn" class="caption-btn" aria-label="Close">X</button>
+          </div>
+        </div>
+
+        <div class="menu-bar" aria-hidden="true">
+          <span><u>F</u>ile</span>
+          <span><u>R</u>ace</span>
+          <span><u>H</u>elp</span>
+          <span id="aboutMenuItem"><u>A</u>bout</span>
+        </div>
+
+        <div class="window-body">
+          <fieldset class="group-box">
+            <legend>Race Control</legend>
+            <div class="controls">
+              <label for="racersInput">Racers:</label>
+              <input id="racersInput" type="number" min="2" max="12" value="5">
+              <button id="newRaceBtn">New Race</button>
+              <button id="startBtn" disabled>Start</button>
+              <button id="restartBtn" disabled>Restart</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="group-box">
+            <legend>Race Status</legend>
+            <div class="status-bar">
+              <div>
+                <span class="status-label">Race ID</span>
+                <span id="raceId" class="status-value">-</span>
+              </div>
+              <div>
+                <span class="status-label">Status</span>
+                <span id="raceStatus" class="status-value">-</span>
+              </div>
+              <div>
+                <span class="status-label">Winner</span>
+                <span id="winnerLabel" class="status-value">-</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+
+          <fieldset class="group-box track-box">
+            <legend>Race Track</legend>
+            <div class="track-scroll">
+              <div id="trackArea" class="track-area">
+                <div class="empty-state">Create a race to begin.</div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="window-statusline" aria-hidden="true">
+          <div class="status-panel">Spring Boot Demo</div>
+          <div class="status-panel">HTML / CSS / JS</div>
+        </div>
+      </section>
+
+      <section id="aboutWindow" class="window about-window is-hidden" aria-label="About project window">
+        <div class="title-bar">
+          <div class="title-bar-text">About - Off to the Races</div>
+          <div class="title-bar-buttons" aria-hidden="true">
+            <button type="button" class="caption-btn">_</button>
+            <button type="button" class="caption-btn">[]</button>
+            <button type="button" class="caption-btn">X</button>
+          </div>
+        </div>
+
+        <div class="menu-bar" aria-hidden="true">
+          <span><u>F</u>ile</span>
+          <span><u>E</u>dit</span>
+          <span><u>V</u>iew</span>
+          <span><u>H</u>elp</span>
+        </div>
+
+        <div class="window-body">
+          <fieldset class="group-box">
+            <legend>Project Notes</legend>
+            <textarea id="aboutExplanation" class="about-textarea" spellcheck="false">Here is one of the very first things I built myself in Java while learning threads.
+
+This demo ports a Java Swing threading + graphics project into a Spring Boot web app.
+
+Backend:
+- Spring Boot stores race state and updates racer positions on a timed loop.
+- REST endpoints create/start/restart/read a race.
+
+Frontend:
+- HTML/CSS/JS renders a Windows 98-style interface.
+- The browser polls the backend and moves the original GIF runner across each lane.</textarea>
+          </fieldset>
+
+          <section class="subwindow code-subwindow" aria-label="Original Java source window">
+            <div class="title-bar" aria-hidden="true">
+              <div class="title-bar-text">Races.java - Original Java Source</div>
+              <div class="title-bar-buttons">
+                <button type="button" class="caption-btn">_</button>
+                <button type="button" class="caption-btn">[]</button>
+                <button type="button" class="caption-btn">X</button>
+              </div>
+            </div>
+            <div class="menu-bar" aria-hidden="true">
+              <span><u>F</u>ile</span>
+              <span><u>E</u>dit</span>
+              <span><u>S</u>earch</span>
+              <span><u>O</u>ptions</span>
+              <span><u>H</u>elp</span>
+            </div>
+            <div class="subwindow-body">
+              <div class="editor-window">
+                <div class="editor-toolbar" aria-hidden="true">
+                  <span class="toolbar-pill">JDK 1.3</span>
+                  <span class="toolbar-pill">Classic Theme</span>
+                  <span class="toolbar-pill">Read Only</span>
+                  <button id="showOriginalImageBtn" type="button" class="toolbar-button">Original</button>
+                </div>
+                <pre id="aboutSourceCode" class="code-viewer">Loading original Races.java...</pre>
+              </div>
+            </div>
+          </section>
+
+          <div class="about-actions">
+            <button id="backToRaceBtn" type="button">Back to Race</button>
+          </div>
+        </div>
+
+        <div class="window-statusline" aria-hidden="true">
+          <div class="status-panel">About / Source Viewer</div>
+          <div class="status-panel">Races.java</div>
+        </div>
+      </section>
+
+      <div id="closeConfirm" class="dialog-overlay hidden" aria-hidden="true">
+        <section class="dialog-window" role="dialog" aria-modal="true" aria-labelledby="closeDialogTitle">
+          <div class="title-bar">
+            <div id="closeDialogTitle" class="title-bar-text">Off to the Races</div>
+            <div class="title-bar-buttons" aria-hidden="true">
+              <button type="button" class="caption-btn">X</button>
+            </div>
+          </div>
+          <div class="dialog-body">
+            <p class="dialog-message">Are you sure you want to close this?</p>
+            <div class="dialog-actions">
+              <button id="closeYesBtn" type="button">Yes</button>
+              <button id="closeNoBtn" type="button">No</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="originalImagePopup" class="dialog-overlay hidden" aria-hidden="true">
+        <section class="dialog-window image-popup-window" role="dialog" aria-modal="true" aria-labelledby="originalImageTitle">
+          <div class="title-bar">
+            <div id="originalImageTitle" class="title-bar-text">Original Desktop Screenshot</div>
+            <div class="title-bar-buttons">
+              <button id="closeOriginalImageBtn" type="button" class="caption-btn" aria-label="Close image popup">X</button>
+            </div>
+          </div>
+          <div class="dialog-body image-popup-body">
+            <div class="image-frame">
+              <img src="/raceog.png" alt="Original Java desktop app screenshot">
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

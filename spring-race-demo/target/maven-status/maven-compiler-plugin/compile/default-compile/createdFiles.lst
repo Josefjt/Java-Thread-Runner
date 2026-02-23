@@ -1,0 +1,8 @@
+com\josef\racedemo\dto\RaceResponse.class
+com\josef\racedemo\RaceDemoApplication.class
+com\josef\racedemo\service\RaceService.class
+com\josef\racedemo\model\RaceStatus.class
+com\josef\racedemo\controller\RaceController.class
+com\josef\racedemo\dto\RacerResponse.class
+com\josef\racedemo\model\Racer.class
+com\josef\racedemo\model\Race.class
